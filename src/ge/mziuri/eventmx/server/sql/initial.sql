@@ -1,0 +1,18 @@
+CREATE TABLE Event(
+ID SERIAL PRIMARY KEY NOT NULL,
+Name VARCHAR(30),
+Public BOOLEAN,
+Capacity INT,
+Location VARCHAR(40)
+
+
+
+);
+
+CREATE TABLE Person(
+
+
+
+
+
+);
