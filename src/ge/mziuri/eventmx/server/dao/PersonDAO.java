@@ -1,4 +1,14 @@
 package ge.mziuri.eventmx.server.dao;
 
-public class PersonDAO {
-}
+import ge.mziuri.eventmx.model.person.Person;
+
+public interface PersonDAO {
+
+    void addPerson(Person person);
+
+
+    void removePerson(Person person);
+
+
+    }
+
