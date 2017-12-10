@@ -40,7 +40,7 @@ public class Event {
         Name = name;
     }
 
-    public boolean isPublic() {
+    public boolean getPublic() {
         return Public;
     }
 

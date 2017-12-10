@@ -1,6 +1,8 @@
 package ge.mziuri.eventmx.server.dao;
 
 import ge.mziuri.eventmx.model.event.Event;
+import ge.mziuri.eventmx.model.event.SortDirection;
+import ge.mziuri.eventmx.model.event.SortType;
 
 public interface EventDAO {
 
@@ -14,9 +16,5 @@ public interface EventDAO {
 
     void changeEventLocation (Event event);
 
-    void sortEventsByAlphabet();
-
-    void sortEventByCapacity();
-
-    void sortEventsByDate();
+    void sortEvent(SortType sortType, SortDirection sortDirection);
 }
