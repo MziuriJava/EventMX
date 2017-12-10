@@ -1,6 +1,6 @@
 package ge.mziuri.eventmx.model.exception;
 
-class EventMXException extends Exception {
+public class EventMXException extends Exception {
     private String messageKey;
 
     private Exception ex;
