@@ -13,7 +13,7 @@ public interface EventDAO {
 
     void makeEventPublic (Event event )throws EventMXException;
 
-    void setCapacity (Event event) throws EventMXException;
+    void setEventCapacity (Event event) throws EventMXException;
 
     void changeEventCapacity (Event event)throws EventMXException;
 

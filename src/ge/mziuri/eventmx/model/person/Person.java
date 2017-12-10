@@ -3,7 +3,7 @@ package ge.mziuri.eventmx.model.person;
 public class Person {
     private int ID;
 
-    private String Firstname;
+    private String Name;
 
     private String Lastname;
 
@@ -17,12 +17,12 @@ public class Person {
         this.ID = ID;
     }
 
-    public String getFirstname() {
-        return Firstname;
+    public String getName() {
+        return Name;
     }
 
-    public void setFirstname(String firstname) {
-        Firstname = firstname;
+    public void setName(String name) {
+        Name = name;
     }
 
     public String getLastname() {

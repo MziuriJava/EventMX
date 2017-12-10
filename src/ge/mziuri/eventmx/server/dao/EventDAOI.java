@@ -60,8 +60,8 @@ public class EventDAOI implements EventDAO {
          Connection con=null;
          con= DatabaseConnector.getConnection();
          PreparedStatement pstmt=con.prepareStatement("SET event capacity=? WHERE ID = ?");
-         pstmt(1,event.setCapacity());
-         pstmt(2,event.setID());
+         pstmt.setInt(1,event.getCapacity());
+         pstmt.setInt(2,event.getID());
      }catch(Exception ex) {
          throw new EventMXException("Can't set capacity", ex);
         }
@@ -75,7 +75,7 @@ public class EventDAOI implements EventDAO {
             Connection con = null;
             con = DatabaseConnector.getConnection();
             PreparedStatement pstmt = con.prepareStatement("UPDATE event SET Capacity = ? WHERE id=?");
-            pstmt.setBoolean(1, event.setCapacity());
+            pstmt.setInt(1, event.getCapacity());
             pstmt.setInt(2, event.getID());
         } catch (Exception ex) {
             throw new EventMXException("Can't change Capacity ", ex);
@@ -89,7 +89,7 @@ public class EventDAOI implements EventDAO {
             Connection con = null;
             con = DatabaseConnector.getConnection();
             PreparedStatement pstmt = con.prepareStatement("UPDATE event SET location=? WHERE id=?");
-            pstmt.setString(1, event.setLocation());
+            pstmt.setString(1, event.getLocation());
             pstmt.setInt(2, event.getID());
         } catch (Exception ex) {
             throw new EventMXException("Can't change location ", ex);
