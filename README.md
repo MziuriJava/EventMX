@@ -1,2 +1,0 @@
-#EventMX
-#beqa kys
