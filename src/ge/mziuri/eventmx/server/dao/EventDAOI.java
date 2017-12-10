@@ -28,22 +28,72 @@ public class EventDAOI implements EventDAO {
     }
 
     @Override
-    public void removeEvent(Event event) {
+    public void removeEvent(Event event) throws EventMXException {
+        try {
+            Connection con = null;
+            con = DatabaseConnector.getConnection();
+            PreparedStatement pstmt = con.prepareStatement("DELETE FROM event WHERE ID=?");
+            pstmt.setInt(1, event.getID());
+        } catch (Exception ex) {
+            throw new EventMXException("Can't remove event", ex);
+        }
+    }
+
+    @Override
+    public void makeEventPublic(Event event) throws EventMXException  {
+        try {
+            Connection con = null;
+            con = DatabaseConnector.getConnection();
+            PreparedStatement pstmt = con.prepareStatement("UPDATE event SET public = ? WHERE id=?");
+            pstmt.setBoolean(1, true);
+            pstmt.setInt(2, event.getID());
+        } catch (Exception ex) {
+            throw new EventMXException("Can't change to public ", ex);
+        }
+
+    }
+
+
+    @Override
+    public void setEventCapacity(Event event) throws EventMXException{
+     try {
+         Connection con=null;
+         con= DatabaseConnector.getConnection();
+         PreparedStatement pstmt=con.prepareStatement("SET event capacity=? WHERE ID = ?");
+         pstmt(1,event.setCapacity());
+         pstmt(2,event.setID());
+     }catch(Exception ex) {
+         throw new EventMXException("Can't set capacity", ex);
+        }
+
+
+    }
+
+        @Override
+    public void changeEventCapacity(Event event) throws EventMXException {
+        try {
+            Connection con = null;
+            con = DatabaseConnector.getConnection();
+            PreparedStatement pstmt = con.prepareStatement("UPDATE event SET Capacity = ? WHERE id=?");
+            pstmt.setBoolean(1, event.setCapacity());
+            pstmt.setInt(2, event.getID());
+        } catch (Exception ex) {
+            throw new EventMXException("Can't change Capacity ", ex);
+        }
 
     }
 
     @Override
-    public void makeEventPublic(Event event) {
-
-    }
-
-    @Override
-    public void changeEventCapacity(Event event) {
-
-    }
-
-    @Override
-    public void changeEventLocation(Event event) {
+    public void changeEventLocation(Event event)throws EventMXException {
+        try {
+            Connection con = null;
+            con = DatabaseConnector.getConnection();
+            PreparedStatement pstmt = con.prepareStatement("UPDATE event SET location=? WHERE id=?");
+            pstmt.setString(1, event.setLocation());
+            pstmt.setInt(2, event.getID());
+        } catch (Exception ex) {
+            throw new EventMXException("Can't change location ", ex);
+        }
 
     }
 
