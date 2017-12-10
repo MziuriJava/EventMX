@@ -6,17 +6,17 @@ public interface EventDAO {
 
     void addEvent (Event event);
 
-    void RemoveEvent (Event event);
+    void removeEvent (Event event);
 
-    void MakeEventPublic (Event event);
+    void makeEventPublic (Event event);
 
-    void ChangeEventCapacity (Event event);
+    void changeEventCapacity (Event event);
 
-    void ChangeEventLocation (Event event);
+    void changeEventLocation (Event event);
 
-    void SortEventsByAlphabet();
+    void sortEventsByAlphabet();
 
-    void SortEventByCapacity();
+    void sortEventByCapacity();
 
-    void SortEventsByDate();
+    void sortEventsByDate();
 }
