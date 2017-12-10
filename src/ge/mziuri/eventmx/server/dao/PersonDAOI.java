@@ -20,6 +20,8 @@ public class PersonDAOI implements PersonDAO {
             pstmt.setString(1, person.getName());
             pstmt.setString(2, person.getLastname());
             pstmt.setInt(3, person.getPerson_ID());
+            pstmt.close();
+            con.close();
         } catch (Exception ex) {
             throw new EventMXException("Can't add person ", ex);
         }
@@ -34,7 +36,7 @@ public class PersonDAOI implements PersonDAO {
             con= DatabaseConnector.getConnection();
             PreparedStatement pstmt=con.prepareStatement("DELETE FROM Person WHERE ID=?");
             pstmt.setInt(1, person.getID());
-
+            pstmt.close();
             con.close();
 
         } catch (Exception ex) {
