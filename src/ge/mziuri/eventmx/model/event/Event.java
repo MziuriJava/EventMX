@@ -4,15 +4,15 @@ import java.util.Date;
 
 public class Event {
 
-    private int ID;
+    private int id;
 
-    private String Name;
+    private String name;
 
-    private boolean Public;
+    private boolean pub;
 
-    private  int Capacity;
+    private  int capacity;
 
-    private String Location;
+    private String location;
 
     private Date date;
 
@@ -24,43 +24,43 @@ public class Event {
         this.date = date;
     }
 
-    public int getID() {
-        return ID;
+    public int getId() {
+        return id;
     }
 
-    public void setID(int ID) {
-        this.ID = ID;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {
-        return Name;
+        return name;
     }
 
     public void setName(String name) {
-        Name = name;
+        this.name = name;
     }
 
-    public boolean getPublic() {
-        return Public;
+    public boolean getPub() {
+        return pub;
     }
 
-    public void setPublic(boolean aPublic) {
-        Public = aPublic;
+    public void setPub(boolean pub) {
+        this.pub = pub;
     }
 
     public int getCapacity() {
-        return Capacity;
+        return capacity;
     }
 
     public void setCapacity(int capacity) {
-        Capacity = capacity;
+        this.capacity = capacity;
     }
 
     public String getLocation() {
-        return Location;
+        return location;
     }
 
     public void setLocation(String location) {
-        Location = location;
+        this.location = location;
     }
 }
