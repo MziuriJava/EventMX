@@ -24,6 +24,7 @@ public class EventDAOI implements EventDAO {
             pstmt.setInt(3, event.getCapacity());
             pstmt.setString(4, event.getLocation());
             pstmt.setTimestamp(5, new Timestamp(event.getDate().getTime()));
+            pstmt.executeUpdate();
             pstmt.close();
             con.close();
 
@@ -41,6 +42,7 @@ public class EventDAOI implements EventDAO {
             con = DatabaseConnector.getConnection();
             PreparedStatement pstmt = con.prepareStatement("DELETE FROM event WHERE ID=?");
             pstmt.setInt(1, event.getId());
+            pstmt.executeUpdate();
             pstmt.close();
             con.close();
 
@@ -57,6 +59,7 @@ public class EventDAOI implements EventDAO {
             PreparedStatement pstmt = con.prepareStatement("UPDATE event SET public = ? WHERE id=?");
             pstmt.setBoolean(1, true);
             pstmt.setInt(2, event.getId());
+            pstmt.executeUpdate();
             pstmt.close();
             con.close();
 
@@ -75,6 +78,7 @@ public class EventDAOI implements EventDAO {
             PreparedStatement pstmt = con.prepareStatement("UPDATE event SET Capacity = ? WHERE id=?");
             pstmt.setInt(1, event.getCapacity());
             pstmt.setInt(2, event.getId());
+            pstmt.executeUpdate();
             pstmt.close();
             con.close();
 
@@ -92,6 +96,7 @@ public class EventDAOI implements EventDAO {
             PreparedStatement pstmt = con.prepareStatement("UPDATE event SET location=? WHERE id=?");
             pstmt.setString(1, event.getLocation());
             pstmt.setInt(2, event.getId());
+            pstmt.executeUpdate();
             pstmt.close();
             con.close();
 
