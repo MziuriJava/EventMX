@@ -1,6 +1,8 @@
 package ge.mziuri.eventmx.client;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.Properties;
 
 public class Messages {
@@ -8,8 +10,20 @@ public class Messages {
 
     public static String getMessage(String key) {
         if (properties == null) {
-        File file=new File("Messages_EN.properties")
+            try {
+                File file = new File("Messages_EN.properties");
+                FileInputStream fileInput = new FileInputStream(file);
+                properties = new Properties();
+                properties.load(fileInput);
+                fileInput.close();
+
+
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+
         }
+        return properties.getProperty(key);
 
     }
 
