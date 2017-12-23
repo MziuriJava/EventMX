@@ -56,9 +56,8 @@ public class EventDAOI implements EventDAO {
         try {
             Connection con = null;
             con = DatabaseConnector.getConnection();
-            PreparedStatement pstmt = con.prepareStatement("UPDATE event SET public = ? WHERE id=?");
-            pstmt.setBoolean(1, true);
-            pstmt.setInt(2, event.getId());
+            PreparedStatement pstmt = con.prepareStatement("UPDATE event SET public = true WHERE id=?");
+            pstmt.setInt(1, event.getId());
             pstmt.executeUpdate();
             pstmt.close();
             con.close();
