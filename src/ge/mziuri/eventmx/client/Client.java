@@ -100,8 +100,8 @@ public class Client {
                     int ccapacity = scanner.nextInt();
 
                     out.writeObject(command);
-                    out.writeObject(cecid);
-                    out.writeObject(ccapacity);
+                    out.writeInt(cecid);
+                    out.writeInt(ccapacity);
                     CommandResult changeEventCapacityResult = (CommandResult) in.readObject();
                     System.out.println(Messages.getMessage(changeEventCapacityResult.name()));
                     break;
