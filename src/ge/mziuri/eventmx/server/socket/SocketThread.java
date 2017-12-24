@@ -4,6 +4,7 @@ import ge.mziuri.eventmx.model.command.Command;
 import ge.mziuri.eventmx.model.command.CommandResult;
 import ge.mziuri.eventmx.model.event.Event;
 import ge.mziuri.eventmx.model.exception.EventMXException;
+import ge.mziuri.eventmx.model.person.Person;
 import ge.mziuri.eventmx.server.dao.EventDAO;
 import ge.mziuri.eventmx.server.dao.EventDAOI;
 import ge.mziuri.eventmx.server.dao.PersonDAO;
@@ -55,6 +56,29 @@ public class SocketThread implements Runnable {
 
 
 
+
+
+            case ADD_PERSON:
+                Person person = (Person) in.readObject();
+                try {
+                    personDAO.addPerson (person);
+                    out.writeObject(CommandResult.SUCCESSFUL);
+                }catch (EventMXException ex){
+                    out.writeObject(CommandResult.FAILURE);
+                    ex.getStackTrace();
+                }
+
+            case REMOVE_PERSON:
+                 int personIdForRemove = in.readInt();
+                Person personForRemove = new Person();
+                personForRemove.setID(personIdForRemove);
+                try {
+                   personDAO.removePerson(personForRemove);
+                    out.writeObject(CommandResult.SUCCESSFUL);
+                }catch (EventMXException ex){
+                    out.writeObject(CommandResult.FAILURE);
+                    ex.getStackTrace();
+                }
 
 
 
