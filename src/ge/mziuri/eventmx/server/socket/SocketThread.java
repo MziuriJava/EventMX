@@ -41,9 +41,27 @@ public class SocketThread implements Runnable {
                 }
                 break;
             case REMOVE_EVENT:
-
-
-
+                int idForRemove = in.readInt();
+                Event eventForRemove = new Event();
+                eventForRemove.setId(idForRemove);
+                try {
+                    eventDAO.removeEvent(eventForRemove);
+                    out.writeObject(CommandResult.SUCCESSFUL);
+                }catch (EventMXException ex){
+                    out.writeObject(CommandResult.FAILURE);
+                    ex.getStackTrace();
+                }
+            case MAKE_EVENT_PUBLIC:
+                int idForMakePublic = in.readInt();
+                Event eventToMakePublic = new Event();
+                eventToMakePublic.setId(idForMakePublic);
+                try{
+                    eventDAO.makeEventPublic(eventToMakePublic);
+                    out.writeObject(CommandResult.SUCCESSFUL);
+                }catch (EventMXException ex){
+                    out.writeObject(CommandResult.FAILURE);
+                    ex.getStackTrace();
+                }
 
 
 

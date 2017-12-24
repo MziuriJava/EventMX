@@ -73,7 +73,7 @@ public class Client {
                     int reid = scanner.nextInt();
 
                     out.writeObject(command);
-                    out.writeObject(reid);
+                    out.writeInt(reid);
                     CommandResult removeEventResult = (CommandResult) in.readObject();
                     System.out.println(Messages.getMessage(removeEventResult.name()));
                     break;
@@ -85,7 +85,7 @@ public class Client {
                     int mepid = scanner.nextInt();
 
                     out.writeObject(command);
-                    out.writeObject(mepid);
+                    out.writeInt(mepid);
                     CommandResult makeEventPublicResult = (CommandResult) in.readObject();
                     System.out.println(Messages.getMessage(makeEventPublicResult.name()));
                     break;
