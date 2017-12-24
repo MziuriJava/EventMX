@@ -3,6 +3,8 @@ package ge.mziuri.eventmx.server.socket;
 import ge.mziuri.eventmx.model.command.Command;
 import ge.mziuri.eventmx.model.command.CommandResult;
 import ge.mziuri.eventmx.model.event.Event;
+import ge.mziuri.eventmx.model.event.SortDirection;
+import ge.mziuri.eventmx.model.event.SortType;
 import ge.mziuri.eventmx.model.exception.EventMXException;
 import ge.mziuri.eventmx.model.person.Person;
 import ge.mziuri.eventmx.server.dao.EventDAO;
@@ -36,13 +38,13 @@ public class SocketThread implements Runnable {
                 try {
                     eventDAO.addEvent(event);
                     out.writeObject(CommandResult.SUCCESSFUL);
-                }catch (EventMXException ex){
+                } catch (EventMXException ex){
                     out.writeObject(CommandResult.FAILURE);
-                    ex.getStackTrace();
+                    ex.printStackTrace();
                 }
                 break;
             case REMOVE_EVENT:
-                int reid = in.readInt();
+                int reid = (Integer)in.readObject();
                 Event eventForRemove = new Event();
                 eventForRemove.setId(reid);
                 try {
@@ -50,7 +52,54 @@ public class SocketThread implements Runnable {
                     out.writeObject(CommandResult.SUCCESSFUL);
                 }catch (EventMXException ex){
                     out.writeObject(CommandResult.FAILURE);
-                    ex.getStackTrace();
+                    ex.printStackTrace();
+                }
+            case MAKE_EVENT_PUBLIC:
+                Integer mepid = (Integer)in.readObject();
+                Event eventToMakePublic = new Event();
+                eventToMakePublic.setId(mepid);
+                try{
+                    eventDAO.makeEventPublic(eventToMakePublic);
+                    out.writeObject(CommandResult.SUCCESSFUL);
+                }catch (EventMXException ex){
+                    out.writeObject(CommandResult.FAILURE);
+                    ex.printStackTrace();
+                }
+            case CHANGE_EVENT_CAPACITY:
+                int cecid = (Integer)in.readObject();
+                int ccapacity = (Integer)in.readObject();
+                Event eventToChangeCapacity = new Event();
+                eventToChangeCapacity.setId(cecid);
+                eventToChangeCapacity.setCapacity(ccapacity);
+                try {
+                    eventDAO.changeEventCapacity(eventToChangeCapacity);
+                    out.writeObject(CommandResult.SUCCESSFUL);
+                }catch (EventMXException ex) {
+                    out.writeObject(CommandResult.FAILURE);
+                    ex.printStackTrace();
+                }
+            case CHANGE_EVENT_LOCATION:
+                int celid = (Integer)in.readObject();
+                String clocation = (String)in.readObject();
+                Event eventToChangeLocation = new Event();
+                eventToChangeLocation.setId(celid);
+                eventToChangeLocation.setLocation(clocation);
+                try{
+                    eventDAO.changeEventLocation(eventToChangeLocation);
+                    out.writeObject(CommandResult.SUCCESSFUL);
+                }catch (EventMXException ex){
+                    out.writeObject(CommandResult.FAILURE);
+                    ex.printStackTrace();
+                }
+            case SORT_EVENTS:
+                SortType sortType = (SortType)in.readObject();
+                SortDirection sortDirection = (SortDirection)in.readObject();
+                try{
+                    eventDAO.sortEvent(sortType, sortDirection);
+                    out.writeObject(CommandResult.SUCCESSFUL);
+                }catch (EventMXException ex){
+                    out.writeObject(CommandResult.FAILURE);
+                    ex.printStackTrace();
                 }
 
 
@@ -65,11 +114,11 @@ public class SocketThread implements Runnable {
                     out.writeObject(CommandResult.SUCCESSFUL);
                 }catch (EventMXException ex){
                     out.writeObject(CommandResult.FAILURE);
-                    ex.getStackTrace();
+                    ex.printStackTrace();
                 }
 
             case REMOVE_PERSON:
-                 int personIdForRemove = in.readInt();
+                 int personIdForRemove = (Integer)in.readObject();
                 Person personForRemove = new Person();
                 personForRemove.setID(personIdForRemove);
                 try {
@@ -77,7 +126,7 @@ public class SocketThread implements Runnable {
                     out.writeObject(CommandResult.SUCCESSFUL);
                 }catch (EventMXException ex){
                     out.writeObject(CommandResult.FAILURE);
-                    ex.getStackTrace();
+                    ex.printStackTrace();
                 }
 
 

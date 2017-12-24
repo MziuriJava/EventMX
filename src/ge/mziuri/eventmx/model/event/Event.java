@@ -1,8 +1,9 @@
 package ge.mziuri.eventmx.model.event;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Event {
+public class Event implements Serializable{
 
     private int id;
 

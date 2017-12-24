@@ -1,6 +1,8 @@
 package ge.mziuri.eventmx.model.person;
 
-public class Person {
+import java.io.Serializable;
+
+public class Person implements Serializable {
     private int ID;
 
     private String Name;

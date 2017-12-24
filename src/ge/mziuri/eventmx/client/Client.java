@@ -3,6 +3,8 @@ package ge.mziuri.eventmx.client;
 import ge.mziuri.eventmx.model.command.Command;
 import ge.mziuri.eventmx.model.command.CommandResult;
 import ge.mziuri.eventmx.model.event.Event;
+import ge.mziuri.eventmx.model.event.SortDirection;
+import ge.mziuri.eventmx.model.event.SortType;
 import ge.mziuri.eventmx.model.person.Person;
 
 import java.io.IOException;
@@ -30,8 +32,8 @@ public class Client {
             }
             int num = scanner.nextInt();
             Command command = commands[num - 1];
+            out.writeObject(command);
             switch (command) {
-
                 case ADD_EVENT:
                     scanner.nextLine();
 
@@ -45,35 +47,37 @@ public class Client {
                     int acapacity = scanner.nextInt();
 
                     System.out.println("Location");
-                    String alocation = scanner.nextLine();
+                    scanner.nextLine();
+                    String aLocation = scanner.nextLine();
 
-                    System.out.println("Date");
+                    System.out.println("Date (MM-dd-yyyy)");
                     String datest = scanner.nextLine();
-                    SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-yyyy");
-                    Date date = sdf.parse(datest);
+                    try {
+                        SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-yyyy");
+                        Date date = sdf.parse(datest);
 
-                    Event event = new Event();
-                    event.setName(name);
-                    event.setPub(pub);
-                    event.setCapacity(acapacity);
-                    event.setLocation(alocation);
-                    event.setDate(date);
+                        Event event = new Event();
+                        event.setName(name);
+                        event.setPub(pub);
+                        event.setCapacity(acapacity);
+                        event.setLocation(aLocation);
+                        event.setDate(date);
 
-                    out.writeObject(command);
-                    out.writeObject(event);
-                    CommandResult addEventResult = (CommandResult) in.readObject();
-                    System.out.println(Messages.getMessage(addEventResult.name()));
-
-                    break;
+                        out.writeObject(event);
+                        CommandResult addEventResult = (CommandResult) in.readObject();
+                        System.out.println(Messages.getMessage(addEventResult.name()));
+                        break;
+                    } catch (ParseException ex) {
+                        System.out.println("Date format is not valid");
+                        break;
+                    }
 
                 case REMOVE_EVENT:
                     scanner.nextLine();
 
                     System.out.println("ID");
                     int reid = scanner.nextInt();
-
-                    out.writeObject(command);
-                    out.writeInt(reid);
+                    out.writeObject(reid);
                     CommandResult removeEventResult = (CommandResult) in.readObject();
                     System.out.println(Messages.getMessage(removeEventResult.name()));
                     break;
@@ -84,8 +88,8 @@ public class Client {
                     System.out.println("ID");
                     int mepid = scanner.nextInt();
 
-                    out.writeObject(command);
-                    out.writeInt(mepid);
+
+                    out.writeObject(mepid);
                     CommandResult makeEventPublicResult = (CommandResult) in.readObject();
                     System.out.println(Messages.getMessage(makeEventPublicResult.name()));
                     break;
@@ -99,9 +103,8 @@ public class Client {
                     System.out.println("Capacity");
                     int ccapacity = scanner.nextInt();
 
-                    out.writeObject(command);
-                    out.writeInt(cecid);
-                    out.writeInt(ccapacity);
+                    out.writeObject(cecid);
+                    out.writeObject(ccapacity);
                     CommandResult changeEventCapacityResult = (CommandResult) in.readObject();
                     System.out.println(Messages.getMessage(changeEventCapacityResult.name()));
                     break;
@@ -115,9 +118,9 @@ public class Client {
                     System.out.println("Location");
                     String clocation=scanner.nextLine();
 
-                    out.writeObject(command);
                     out.writeObject(celid);
-                    out.writeObject(clocation);
+                    out.writeChars(clocation);
+
                     CommandResult changeEventLocationResult = (CommandResult) in.readObject();
                     System.out.println(Messages.getMessage(changeEventLocationResult.name()));
                     break;
@@ -126,17 +129,23 @@ public class Client {
                     scanner.nextLine();
 
                     System.out.println("Sort By (NAME, CAPACITY, DATE)");
-                    String sortType=scanner.nextLine();
+                    String sortType = scanner.nextLine();
 
                     System.out.println("Sort Direction (ASC, DESC)");
                     String sortDirection=scanner.nextLine();
 
-                    out.writeObject(command);
-                    out.writeObject(sortType);
-                    out.writeObject(sortDirection);
-                    CommandResult sortEventsResult = (CommandResult) in.readObject();
-                    System.out.println(Messages.getMessage(sortEventsResult.name()));
-                    break;
+                    try {
+                        SortType type = SortType.valueOf(sortType);
+                        SortDirection direction = SortDirection.valueOf(sortDirection);
+
+                        out.writeObject(type);
+                        out.writeObject(direction);
+                        CommandResult sortEventsResult = (CommandResult) in.readObject();
+                        System.out.println(Messages.getMessage(sortEventsResult.name()));
+                        break;
+                    } catch (IllegalArgumentException ex) {
+                        System.out.println("Sort By or Sort Direction is not valid");
+                    }
 
                 case ADD_PERSON:
                     scanner.nextLine();
@@ -155,7 +164,6 @@ public class Client {
                     person.setLastname(lastname);
                     person.setPerson_ID(person_id);
 
-                    out.writeObject(command);
                     out.writeObject(person);
                     CommandResult addPersonResult = (CommandResult) in.readObject();
                     System.out.println(Messages.getMessage(addPersonResult.name()));
@@ -167,23 +175,13 @@ public class Client {
                     System.out.println("ID");
                     int pid=scanner.nextInt();
 
-                    out.writeObject(command);
                     out.writeObject(pid);
                     CommandResult removePersonResult = (CommandResult) in.readObject();
                     System.out.println(Messages.getMessage(removePersonResult.name()));
                     break;
-
-
-
             }
-
-
-        } catch (IOException ex) {
+        } catch (IOException | ClassNotFoundException ex) {
             ex.printStackTrace();
-        } catch (ParseException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-
         }
 
 
